@@ -117,7 +117,9 @@ Integer i1 = 100;
 Integer i2 = 100;
 Integer i3 = 200;
 Integer i4 = 200;
-/**/
+/*
+Integer 实现申请了127个Integer大小的数组作为缓存。
+*/
 System.out.println( i1 == i2 ); //true
 System.out.println( i3 == i4 ); //false
 ```
@@ -143,6 +145,7 @@ System.out.println( i3 == i4 ); //false
 private final char[] value;
 /*直接赋值创建的对象是在常量池中，自动进入常量池*/
 String str = "abc";
+
 /* "abc"字符串对象已经存在与常量池、但是“xyz”会在常量池中新建出来 
 	拼接出来的新的字符串也会出现在常量池中
 */
@@ -151,9 +154,10 @@ String str1 = "abc"+"xyz"；
 String str_ = new String("abc");
 ```
 
-​	equals方法,比较对象中值是否相等。
+​	equals（）方法,比较对象中值是否相等。一一比较字符数组的每一个字符。String类中的equals()方法对Object中的equals()进行了重写。
 
 ```java
+
 str.equals(str_);
 str.hashcode();
 str.charAt(0);//获取第0个字符
@@ -163,12 +167,122 @@ str.concat();
 
 intern()
 
+```
+
+```
+
+
+
+返回
+
 ```java
 String a = "abc"
 String b = "ced"
 String c = "adcde"
-String 
+String str = new String("abc");
+```
+
+hashcode()
+
+```java
+
+```
+
+- StringBuffer
+
+  > 线程安全，效率低
+
+```java
+StringBuffer sb = new StringBuffer（）；
+sb.append(1);
+sb.append(true);
+sb.append("haha");
+```
+
+length 和 capacity 的区别
+
+- StringBuilder
+
+  > 线程不安全
+
 ```
 
 
+
+
+```
+
+- enum 枚举
+
+  > 相当于对象已经提前创建完毕了
+  >
+  > 当你需要定义一组常量的时候，可以使用枚举类
+
+```java
+public enum NETS{
+    
+    KD(7), KI(11);
+    
+    NETS(int i){
+    }
+    private int number;
+}
+```
+
+- Object 类
+
+hashcode（）方法
+
+```java
+hashcode()   
+```
+
+equals()
+
+```java
+
+```
+
+toString()
+
+```java
+/*对象的地址*/
+```
+
+notify()
+
+```
+
+```
+
+notifyAll()
+
+```
+
+```
+
+wait()
+
+```
+
+```
+
+waitlong()
+
+```
+
+```
+
+finalize()
+
+```java
+/* 垃圾回收，若对象存在应用就不会进行垃圾回收。*/
+```
+
+
+
+
+
+- 
+- 反射
 
