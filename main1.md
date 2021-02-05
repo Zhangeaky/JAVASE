@@ -139,7 +139,6 @@ System.out.println( i3 == i4 ); //false
 ```java
 /*String 属性的值
 ---final 类型说明 引用关系不能被改变，拼接、剪裁操作都会产生新的对象
-
 */
 
 private final char[] value;
@@ -154,7 +153,7 @@ String str1 = "abc"+"xyz"；
 String str_ = new String("abc");
 ```
 
-​	equals（）方法,比较对象中值是否相等。一一比较字符数组的每一个字符。String类中的equals()方法对Object中的equals()进行了重写。
+​	equals（）方法。String类中的equals()方法对Object中的equals()进行了重写，比较对象中值是否相等，其过程是一一比较字符数组的每一个字符是否相等。
 
 ```java
 
@@ -193,7 +192,11 @@ hashcode()
   > 线程安全，效率低
 
 ```java
+/* 可以修改value字符数组中的内容  */
+private transient char[] toStringCache
+
 StringBuffer sb = new StringBuffer（）；
+/*方法使用synchronized修饰*/
 sb.append(1);
 sb.append(true);
 sb.append("haha");
