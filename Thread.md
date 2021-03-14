@@ -54,7 +54,7 @@ join()  在线程本地调用自己的join()方法是没有任何意义的。该
     
 ```
 
-### 线程状态 低级
+### 线程状态	低级
 
 ```java
 NEW：对象刚刚创建 还没有调用start方法的时候
@@ -65,17 +65,15 @@ BLOCKED  synchronized 竞争锁 只有经过操作系统调度才会进入blocke
 TERMINATED run方法执行完毕
 ```
 
-### 线程“打断”  中级
+### 线程“打断”	中级
 
 ```java
 interrupt() 只是设置终端标志位
 isInterrupted() 查询是否被设置过标志位
-static interrupted() 查询“当前”线程标志位，并重置标志位
+static interrupted() 查询“当前”线程标志位，并重置标志位    
+对正在sleep join wait 的线程进行interrupt 操作的时候，线程会抛出异常，并且自动复位标志位    
+线程处于 Synchronized Lock 竞争锁的时候不会被interrrupt干扰
 ```
-
-
-
-
 
 ### 线程安全
 
