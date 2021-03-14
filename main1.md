@@ -107,8 +107,6 @@ Integer i = Integer.valueOf(100); //返回引用值
 new Integer(100).intvalue(); // 返回普通值
 ```
 
-
-
 Integer valueof()方法和 invalue方法的源码考察
 
 ```java
@@ -128,7 +126,7 @@ System.out.println( i3 == i4 ); //false
 
   字符串本身是一个字符数组。
 
-  String 类使用fianl 修饰 不可以被继承了。
+  String 类使用final 修饰 不可以被继承了。
 
   常量池 jdk1.7 后放置在堆区中。jdk1.8后永久区被移除
 
@@ -282,10 +280,80 @@ finalize()
 /* 垃圾回收，若对象存在应用就不会进行垃圾回收。*/
 ```
 
+- 函数式编程 jdk1.8 lambada 
+
+函数式接口：只有一个抽象方法的接口叫做函数式接口。
+
+```java
+@FunctionalInterface
+public interface FunctionStyle {
+    void f1();/*有且仅有一个抽象方法*/
+}
+```
 
 
 
+- 方法引用
 
-- 
+静态方法引用
+
+```java
+class person{
+    public static void say(){}
+}
+
+public static void main(String args[]){
+    
+    person::say;
+    
+}
+```
+
+实例方法引用
+
+```java
+System.out::println
+```
+
+对象方法引用
+
+```java
+class Too {
+    public Integer fun(String s){
+        return 1;df
+    }
+}
+```
+
+
+
+构造方法引用
+
+- Stream API
+
+执行
+
+```
+
+```
+
+- 注解
+
+元注解
+
+```java
+@Target（ElementType.METHED） /*表示和声明当前自定义的注解适用于什么范围*/
+@Retention /*当前 的注解的使用环境 源码  类 运行时*/ 
+@Document  /*注解能否在javadoc中显示*/
+@Inherited /*注解是否能够被继承*/
+@Interface nihao{
+    
+    
+    
+}
+```
+
+
+
 - 反射
 
