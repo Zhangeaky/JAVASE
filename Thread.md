@@ -1,4 +1,4 @@
-## 基础
+## 一、基础
 
 ### 进程与线程到底是什么？
 
@@ -36,8 +36,8 @@ Profiler（性能测算工具）工具测算
    通过类 Future<?>: 异步传递返回值 其成员方法 get() 阻塞类型得到返回值
        
 6. FututreTask<?> task = new FutureTask<?>( 实现callable的接口实现类 )
-       callable<>
- FutureTask 实现了接口Runnable Future接口
+   (1) task.get() 获取返回值对象；
+   (2) FutureTask 实现了接口Runnable Future接口
 ×××××××××××
 本质上都是创建Thread对象 调用 start方法
     
@@ -46,12 +46,11 @@ Profiler（性能测算工具）工具测算
 ### 常见的线程的方法
 
 ```java
-sleep() 让其他
-    
-    
-yield（）线程离开或者让出CPU 进入等待队列 进入线程的就绪态
-join()  在线程本地调用自己的join()方法是没有任何意义的。该方法是指，暂停t1线程的执行，转而到join()方法的t2线程执行，并在t2线程执行结束后再返回t1线程。
-    
+java.lang.Thread
+static sleep() 让当前的线程休眠指定的毫秒数。
+wait() 方法
+static yield（）线程离开或者让出CPU 进入等待队列 进入线程的就绪态
+join()  在线程本地调用自己的join()方法是没有任何意义的。该方法是指，暂停t1线程的执行，转而到join()方法的t2线程执行，并在t2线程执行结束后再返回t1线程。  
 ```
 
 ### 线程状态	低级
@@ -74,6 +73,183 @@ static interrupted() 查询“当前”线程标志位，并重置标志位
 对正在sleep join wait 的线程进行interrupt 操作的时候，线程会抛出异常，并且自动复位标志位    
 线程处于 Synchronized Lock 竞争锁的时候不会被interrrupt干扰
 ```
+
+### 线程的结束    有可能   理解
+
+```java
+
+java.lang.thread
+  
+// 粗暴结束 以及为什么被废弃
+stop() 方法 粗暴 
+    释放所有的锁，容易产生数据不一致性的问题
+
+suspend() 暂停的时候 锁不会被释放，容易产生死锁
+resume()
+    
+//优雅的结束 特定场景下的    
+volatile 标志位 不依赖于中间状态
+    volatile running = true;
+    
+    while(running){
+        
+        sleep() //会阻塞
+        
+    }
+
+interrupt() 设置标记位 更加优雅 同同样适用于在中间过程对状态不高的
+//
+```
+
+
+
+## 二、 进阶
+
+### 并发编程三大特性  重中之重  必问
+
+#### 1. 可见性
+
+一个线程对一个
+
+```java
+public class Hello_volatile{
+    
+    private static /* vloaltile */  boolean running =false;
+    private static void m(){
+        System.out.println("start");
+        while(running){
+            /*  是否会有触发缓存和内存刷新的语句 */
+        }
+        System.our.println("end");
+    }
+    
+    public void main (String[] args){
+        
+        //t1 线程会不断的读 running的值
+        new thread(Hello_volatile::m ,"t1").start;
+		
+        //主线程 对 running的读取
+        running =false;
+    }
+}
+```
+
+**volatile** 的作用 ： 被volatile修饰的变量，线程每一次要对它进行读取，都要到主内存中去访问
+
+**volatile 修饰引用类型**  只能保证引用本身的可见性，而不能保证 内部字段的可见性。也就是说，当变量指向的引用变了的时候，才会在线程间可见，引用类型内部字段的改变是不可见的。这种情况相对少见，一般出现在面试题中。
+
+```java
+class java{
+    
+    private static class A{
+    
+    private static boolean running =false;
+    private static void m(){
+        System.out.println("start");
+        while(running){ }
+        System.our.println("end");
+    }  
+}
+
+private volatile static A a = new A();
+    
+    public static void main(String[] args){
+        
+        new Thread(java::m,"t1").start;
+        sleep(1);
+        a.running = false
+    }
+    
+     
+    
+}
+```
+
+##### 缓存
+
+```java
+缓存行： cacheLine 64 B 大小
+   缓存行和volatile没有关系 
+   缓存一致性协议，同一个缓存行发生改变，会通知另一个CPU的相同缓存行
+   缓存行越大，局部空间效率越高，但读取的时间慢
+   缓存行越小，局部空间命中率越低，但读取时间快
+    64 B 是一种折中
+   
+class java{
+    public static long COUNT = 10 0000 0000L;
+    
+    private static class T{
+        // private long p1,p2,p3,p4,p5,p6,p7;
+        public long x = 0L;
+        
+    }
+    public static T[] arr = new T[2];
+    
+    static {
+        arr[0] = new T();
+        arr[0] = new T();
+    }
+    
+}
+
+局部性原理：
+    当我们读到一个数据的时候，很可能很快会读到相邻的值  空间局部性
+    时间局部性
+    
+    
+    
+    
+    
+    
+```
+
+#### 2. 有序性
+
+> 程序是按照顺序执行的吗？
+
+为什么会存在乱序的现象？
+
+CPU为了提高效率，前后两条语句没有依赖关系的时候
+
+##### 乱序存在的条件
+
+as-if-serial（看上去是序列化）
+
+不影响单线程最终一致性的情况下，可以乱序。
+
+this 逸出 不要造构造方法里面开启线程
+
+#### 3.原子性
+
+多线程访问共享数据的时候出现的不一致
+
+原子操作：不能被打断，不能并发执行
+
+即使是汇编语言，也有可能被其他线程所打断
+
+java 8大原子操作
+
+```java
+public static void main(String[] args){
+    
+    n++;
+    
+}
+```
+
+
+
+上锁的本质:把并发编程序列化，使线程同步。上锁之后效率肯定会变低。
+
+synchronized 会保证可见性和原子性，使得主内存的数据永远是最新的。但不本保证有序性。
+
+
+
+**一些基本概念** 
+
+monitor 管程 --->锁（synchronized后面跟的东西）
+
+critical section 临界区
 
 ### 线程安全
 

@@ -1,18 +1,11 @@
 package top.zhangeaky.JVM;
 
-public class show {
-    show(int a){
+public class show  {
 
-    }
+    int i =1000;
+    private String  name = "zhangeaky";
+    public String gender = "male";
+    Integer age = 18;
 
-    public int say(){
-        System.out.println("hello world");
-        return 1;
-
-    }
-
-    public static void main(String[] args) {
-
-    }
 
 }
