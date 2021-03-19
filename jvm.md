@@ -85,3 +85,87 @@ JIT
 混合模式：热点代码编译成本地代码 结合  解释器
 
 为什么不直接编译为本地代码？解释器效率高
+
+
+
+### initial
+
+#### 指令重排
+
+```java
+package com.mashibing.dp.singleton;
+
+/**
+ * lazy loading
+ * 也称懒汉式
+ * 虽然达到了按需初始化的目的，但却带来线程不安全的问题
+ * 可以通过synchronized解决，但也带来效率下降
+ */
+public class Mgr06 {
+    private static volatile Mgr06 INSTANCE; //JIT
+
+    private Mgr06() {
+    }
+
+    public static Mgr06 getInstance() {
+        if (INSTANCE == null) {
+            //双重检查
+            synchronized (Mgr06.class) {
+                if(INSTANCE == null) {
+                    try {
+                        Thread.sleep(1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    INSTANCE = new Mgr06();
+                }
+            }
+        }
+        return INSTANCE;
+    }
+
+    public void m() {
+        System.out.println("m");
+    }
+
+    public static void main(String[] args) {
+        for(int i=0; i<100; i++) {
+            new Thread(()->{
+                System.out.println(Mgr06.getInstance().hashCode());
+            }).start();
+        }
+    }
+}
+
+```
+
+### JMM java 内存模型
+
+#### 1. 硬件层并发优化 基础
+
+```java
+
+多线程数据一致性的硬件层面支持  bus lock 老的方式
+    一致性协议 缓存锁+总线锁
+    有一些数据
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+```
+
