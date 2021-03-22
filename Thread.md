@@ -105,36 +105,9 @@ interrupt() 设置标记位 更加优雅 同同样适用于在中间过程对状
 
 ## 二、 进阶
 
-### 并发编程三大特性  重中之重  必问
 
-#### 1. 可见性
 
-一个线程对一个
 
-```java
-public class Hello_volatile{
-    
-    private static /* vloaltile */  boolean running =false;
-    private static void m(){
-        System.out.println("start");
-        while(running){
-            /*  是否会有触发缓存和内存刷新的语句 */
-        }
-        System.our.println("end");
-    }
-    
-    public void main (String[] args){
-        
-        //t1 线程会不断的读 running的值
-        new thread(Hello_volatile::m ,"t1").start;
-		
-        //主线程 对 running的读取
-        running =false;
-    }
-}
-```
-
-**volatile** 的作用 ： 被volatile修饰的变量，线程每一次要对它进行读取，都要到主内存中去访问
 
 **volatile 修饰引用类型**  只能保证引用本身的可见性，而不能保证 内部字段的可见性。也就是说，当变量指向的引用变了的时候，才会在线程间可见，引用类型内部字段的改变是不可见的。这种情况相对少见，一般出现在面试题中。
 
