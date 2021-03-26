@@ -2,12 +2,14 @@ package top.zhangeaky.entity;
 
 public class player {
 
+    static int id =  123456;
+
     public player(String name, String team, Integer number) {
         this.name = name;
         Team = team;
         this.number = number;
     }
-    player(){}
+   public player(){}
 
     private String name;
     private String Team;
