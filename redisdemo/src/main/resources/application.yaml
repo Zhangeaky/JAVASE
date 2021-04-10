@@ -1,0 +1,46 @@
+# 以数据为中心
+
+# 基本语法
+#
+# key:(空格)value 空格必须有
+# 空格为缩进关系 只要左对齐就行 空格的个数不重要
+#   " ": 双引号下的字符串 不会转义 字符串里面的特殊字符 会作为本身表示的意思
+#对象写法
+#  person:
+#     name:mike
+#     age:18
+#
+#  person: {name:mike,age:18 }
+#
+#
+# 数组:
+#
+#
+#   ' '  : dan引号下的字符串 会转义特殊字符
+#
+server:
+  port: 8081
+
+
+# 激活 制定的环境
+spring:
+  profiles:
+    active: dev
+
+person:
+  name: zhangeaky
+  age: 25
+  birth: 1996/06/08
+  maps: {country: china, province: zhejiang, city: hangzhou  }
+  dog:
+    age: 18
+    name: huang
+---
+server:
+  port: 8084
+
+# 文档块
+spring:
+  profiles: dev
+
+---
