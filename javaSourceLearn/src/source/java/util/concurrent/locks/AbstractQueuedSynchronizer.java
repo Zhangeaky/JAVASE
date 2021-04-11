@@ -384,9 +384,9 @@ public abstract class AbstractQueuedSynchronizer
         static final Node EXCLUSIVE = null;
 
         /** waitStatus value to indicate thread has cancelled */
-        static final int CANCELLED =  1;//线程取消同步资源
+        static final int CANCELLED =  1;
         /** waitStatus value to indicate successor's thread needs unparking */
-        static final int SIGNAL    = -1;//
+        static final int SIGNAL    = -1;
         /** waitStatus value to indicate thread is waiting on condition */
         static final int CONDITION = -2;
         /**
@@ -429,7 +429,6 @@ public abstract class AbstractQueuedSynchronizer
          * CONDITION for condition nodes.  It is modified using CAS
          * (or when possible, unconditional volatile writes).
          */
-        //其值只能是以上四中情况
         volatile int waitStatus;
 
         /**
@@ -464,7 +463,7 @@ public abstract class AbstractQueuedSynchronizer
          * The thread that enqueued this node.  Initialized on
          * construction and nulled out after use.
          */
-        volatile Thread thread;//进入队列时的线程对象
+        volatile Thread thread;
 
         /**
          * Link to next node waiting on condition, or the special
@@ -492,7 +491,6 @@ public abstract class AbstractQueuedSynchronizer
          *
          * @return the predecessor of this node
          */
-        //返回当前节点的前驱节点
         final Node predecessor() throws NullPointerException {
             Node p = prev;
             if (p == null)
@@ -521,7 +519,6 @@ public abstract class AbstractQueuedSynchronizer
      * If head exists, its waitStatus is guaranteed not to be
      * CANCELLED.
      */
-    //假头节点
     private transient volatile Node head;
 
     /**
@@ -533,7 +530,7 @@ public abstract class AbstractQueuedSynchronizer
     /**
      * The synchronization state.
      */
-    private volatile int state;//同步状态
+    private volatile int state;
 
     /**
      * Returns the current value of synchronization state.
@@ -549,7 +546,6 @@ public abstract class AbstractQueuedSynchronizer
      * This operation has memory semantics of a {@code volatile} write.
      * @param newState the new state value
      */
-
     protected final void setState(int newState) {
         state = newState;
     }
@@ -864,7 +860,7 @@ public abstract class AbstractQueuedSynchronizer
             boolean interrupted = false;
             for (;;) {
                 final Node p = node.predecessor();
-                if (p == head && tryAcquire(arg)) {
+                if (p == head && tryAcquire(arg)) {/* 如果前面是头结点  */
                     setHead(node);
                     p.next = null; // help GC
                     failed = false;
@@ -1198,7 +1194,6 @@ public abstract class AbstractQueuedSynchronizer
      *        {@link #tryAcquire} but is otherwise uninterpreted and
      *        can represent anything you like.
      */
-
     public final void acquire(int arg) {
         if (!tryAcquire(arg) &&
             acquireQueued(addWaiter(Node.EXCLUSIVE), arg))
@@ -1832,7 +1827,6 @@ public abstract class AbstractQueuedSynchronizer
      * <p>This class is Serializable, but all fields are transient,
      * so deserialized conditions have no waiters.
      */
-    //
     public class ConditionObject implements Condition, java.io.Serializable {
         private static final long serialVersionUID = 1173984872572414699L;
         /** First node of condition queue. */

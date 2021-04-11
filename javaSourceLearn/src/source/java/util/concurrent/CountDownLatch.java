@@ -158,12 +158,9 @@ public class CountDownLatch {
      * Synchronization control For CountDownLatch.
      * Uses AQS state to represent count.
      */
-    //静态内部类
     private static final class Sync extends AbstractQueuedSynchronizer {
         private static final long serialVersionUID = 4982264981922014374L;
 
-        //传入的倒计时的次数
-        //并使用state 表示 count
         Sync(int count) {
             setState(count);
         }
@@ -172,11 +169,10 @@ public class CountDownLatch {
             return getState();
         }
 
-        //AQS 方法重写
         protected int tryAcquireShared(int acquires) {
             return (getState() == 0) ? 1 : -1;
         }
-        //AQS 方法重写
+
         protected boolean tryReleaseShared(int releases) {
             // Decrement count; signal when transition to zero
             for (;;) {
@@ -191,7 +187,6 @@ public class CountDownLatch {
     }
 
     private final Sync sync;
-
 
     /**
      * Constructs a {@code CountDownLatch} initialized with the given count.
@@ -277,7 +272,7 @@ public class CountDownLatch {
      * @throws InterruptedException if the current thread is interrupted
      *         while waiting
      */
-    public boolean await(long timeout, TimeUnit unit)
+    public boolean await(long timeout, TimeUnit unit)/* 等待的对应的时间退出*/
         throws InterruptedException {
         return sync.tryAcquireSharedNanos(1, unit.toNanos(timeout));
     }

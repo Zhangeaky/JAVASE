@@ -378,7 +378,7 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
      * that workerCount is 0 (which sometimes entails a recheck -- see
      * below).
      */
-    private final AtomicInteger ctl = new AtomicInteger(ctlOf(RUNNING, 0));
+    private final AtomicInteger ctl = new AtomicInteger(ctlOf(RUNNING, 0)); /* 高三位表示线程池的状态 后29位表示worker的数量目前线程池zhong de */
     private static final int COUNT_BITS = Integer.SIZE - 3;
     private static final int CAPACITY   = (1 << COUNT_BITS) - 1;
 
@@ -593,7 +593,7 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
      * runWorker).
      */
     private final class Worker
-        extends AbstractQueuedSynchronizer
+        extends AbstractQueuedSynchronizer /* 因为会有多线程对worker进行访问所以把自己变成了一把锁 */
         implements Runnable
     {
         /**
@@ -603,7 +603,7 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
         private static final long serialVersionUID = 6138294804551838833L;
 
         /** Thread this worker is running in.  Null if factory fails. */
-        final Thread thread;
+        final Thread thread; /* 正在执行任务的线程 */
         /** Initial task to run.  Possibly null. */
         Runnable firstTask;
         /** Per-thread task counter */
@@ -898,9 +898,9 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
      * state).
      * @return true if successful
      */
-    private boolean addWorker(Runnable firstTask, boolean core) {
+    private boolean addWorker(Runnable firstTask, boolean core) { /* 往线程池中添加线程 */
         retry:
-        for (;;) {
+        for (;;) { /* 外层自旋 先把worker数量 +1 */
             int c = ctl.get();
             int rs = runStateOf(c);
 
@@ -911,7 +911,7 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
                    ! workQueue.isEmpty()))
                 return false;
 
-            for (;;) {
+            for (;;) { /*  添加线程  */
                 int wc = workerCountOf(c);
                 if (wc >= CAPACITY ||
                     wc >= (core ? corePoolSize : maximumPoolSize))
@@ -1363,8 +1363,8 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
          * and so reject the task.
          */
         int c = ctl.get();
-        if (workerCountOf(c) < corePoolSize) {
-            if (addWorker(command, true))
+        if (workerCountOf(c)/* 对CTL进行位运算 算出线程池中线程的值 */ < corePoolSize) {
+            if (addWorker(command, true))/* 因为核心线程没有满 所以添加核心线程 */
                 return;
             c = ctl.get();
         }
@@ -1373,9 +1373,9 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
             if (! isRunning(recheck) && remove(command))
                 reject(command);
             else if (workerCountOf(recheck) == 0)
-                addWorker(null, false);
+                addWorker(null, false);/* 队列和核心都满的情况下 开启非核心线程 */
         }
-        else if (!addWorker(command, false))
+        else if (!addWorker(command, false)) /* 添加非核心线程失败 就要拒绝 */
             reject(command);
     }
 

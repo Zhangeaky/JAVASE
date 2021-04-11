@@ -60,7 +60,7 @@ public class AtomicInteger extends Number implements java.io.Serializable {
 
     static {
         try {
-            valueOffset = unsafe.objectFieldOffset
+            valueOffset = unsafe.objectFieldOffset/* value 在对象内存中的偏移量  */
                 (AtomicInteger.class.getDeclaredField("value"));
         } catch (Exception ex) { throw new Error(ex); }
     }

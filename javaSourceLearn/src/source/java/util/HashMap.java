@@ -135,7 +135,6 @@ import sun.misc.SharedSecrets;
  * @see     Hashtable
  * @since   1.2
  */
-
 public class HashMap<K,V> extends AbstractMap<K,V>
     implements Map<K,V>, Cloneable, Serializable {
 
@@ -278,7 +277,6 @@ public class HashMap<K,V> extends AbstractMap<K,V>
      * TreeNode subclass, and in LinkedHashMap for its Entry subclass.)
      */
     static class Node<K,V> implements Map.Entry<K,V> {
-        //链表节点
         final int hash;
         final K key;
         V value;
@@ -337,7 +335,6 @@ public class HashMap<K,V> extends AbstractMap<K,V>
      * never be used in index calculations because of table bounds.
      */
     static final int hash(Object key) {
-        //哈希值
         int h;
         return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
     }
@@ -471,13 +468,11 @@ public class HashMap<K,V> extends AbstractMap<K,V>
         this(initialCapacity, DEFAULT_LOAD_FACTOR);
     }
 
-
     /**
      * Constructs an empty <tt>HashMap</tt> with the default initial capacity
      * (16) and the default load factor (0.75).
      */
     public HashMap() {
-        //默认装载因子 0.75
         this.loadFactor = DEFAULT_LOAD_FACTOR; // all other fields defaulted
     }
 
@@ -629,64 +624,32 @@ public class HashMap<K,V> extends AbstractMap<K,V>
      */
     final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
                    boolean evict) {
-
-        Node<K,V>[] tab;
-        Node<K,V> p;
-        int n, i;
-        /*hashmap 没有实例化h初始化
-        *
-        * */
+        Node<K,V>[] tab; Node<K,V> p; int n, i;
         if ((tab = table) == null || (n = tab.length) == 0)
             n = (tab = resize()).length;
-
-        //目标的桶位置为空，则直接放入
         if ((p = tab[i = (n - 1) & hash]) == null)
             tab[i] = newNode(hash, key, value, null);
-
-        //目标的桶不为空
-        /*
-        * */
         else {
-            Node<K,V> e;
-            K k;
-            // 该键已经存在 ，或者是相同的键值对，则直接进行
+            Node<K,V> e; K k;
             if (p.hash == hash &&
                 ((k = p.key) == key || (key != null && key.equals(k))))
                 e = p;
-
-            // 桶节点 已经变为树
             else if (p instanceof TreeNode)
-                //将新元素加入红黑树
                 e = ((TreeNode<K,V>)p).putTreeVal(this, tab, hash, key, value);
-            //尚未变为红黑树
             else {
-                //
                 for (int binCount = 0; ; ++binCount) {
-                    //1. 遍历到链表的最后一个节点
                     if ((e = p.next) == null) {
                         p.next = newNode(hash, key, value, null);
-                        //链表的节点数>=8
                         if (binCount >= TREEIFY_THRESHOLD - 1) // -1 for 1st
-                            //链表转化为红黑数
                             treeifyBin(tab, hash);
                         break;
                     }
-                    //如果需要添加的节点和链表中的其他节点相同
                     if (e.hash == hash &&
                         ((k = e.key) == key || (key != null && key.equals(k))))
                         break;
-
-                    /*
-                    * 1. 既不是尾巴节点
-                    * 2. 也没有在链表中查到重复节点
-                    * */
-
-                    //遍历链表
                     p = e;
                 }
             }
-
-
             if (e != null) { // existing mapping for key
                 V oldValue = e.value;
                 if (!onlyIfAbsent || oldValue == null)
@@ -695,7 +658,6 @@ public class HashMap<K,V> extends AbstractMap<K,V>
                 return oldValue;
             }
         }
-
         ++modCount;
         if (++size > threshold)
             resize();

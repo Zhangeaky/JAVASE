@@ -232,13 +232,13 @@ public class ReentrantLock implements Lock, java.io.Serializable {
             final Thread current = Thread.currentThread();
             int c = getState();
             if (c == 0) {
-                if (!hasQueuedPredecessors() &&
+                if (!hasQueuedPredecessors()/* 同步队列中有没有前驱节点 */ &&
                     compareAndSetState(0, acquires)) {
-                    setExclusiveOwnerThread(current);
+                    setExclusiveOwnerThread(current);/* 当前线程占有锁*/
                     return true;
                 }
             }
-            else if (current == getExclusiveOwnerThread()) {
+            else if (current == getExclusiveOwnerThread()) {/* 线程锁重入 */
                 int nextc = c + acquires;
                 if (nextc < 0)
                     throw new Error("Maximum lock count exceeded");
