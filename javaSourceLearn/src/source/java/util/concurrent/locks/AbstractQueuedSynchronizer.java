@@ -602,8 +602,8 @@ public abstract class AbstractQueuedSynchronizer
      * @param mode Node.EXCLUSIVE for exclusive, Node.SHARED for shared
      * @return the new node
      */
-    private Node addWaiter(Node mode) {
-        Node node = new Node(Thread.currentThread(), mode);
+    private Node addWaiter(Node mode) {/* 为当前线程封装成一个Node对象  */
+        Node node = new Node(Thread.currentThread(), mode);/* 当前线程 */
         // Try the fast path of enq; backup to full enq on failure
         Node pred = tail;
         if (pred != null) {
@@ -1072,7 +1072,7 @@ public abstract class AbstractQueuedSynchronizer
      *         correctly.
      * @throws UnsupportedOperationException if exclusive mode is not supported
      */
-    protected boolean tryAcquire(int arg) {
+    protected boolean tryAcquire(int arg) { /* 交由子类实现 */
         throw new UnsupportedOperationException();
     }
 
@@ -1195,7 +1195,7 @@ public abstract class AbstractQueuedSynchronizer
      *        can represent anything you like.
      */
     public final void acquire(int arg) {
-        if (!tryAcquire(arg) &&
+        if (!tryAcquire(arg) && /* 子类具体实现 如reenrantlock 公平与非公平 */
             acquireQueued(addWaiter(Node.EXCLUSIVE), arg))
             selfInterrupt();
     }
@@ -1509,15 +1509,15 @@ public abstract class AbstractQueuedSynchronizer
      *         is at the head of the queue or the queue is empty
      * @since 1.7
      */
-    public final boolean hasQueuedPredecessors() {
+    public final boolean hasQueuedPredecessors() {/* 用于查询队列中是否有等待更久的节点 */
         // The correctness of this depends on head being initialized
         // before tail and on head.next being accurate if the current
         // thread is first in queue.
         Node t = tail; // Read fields in reverse initialization order
         Node h = head;
         Node s;
-        return h != t &&
-            ((s = h.next) == null || s.thread != Thread.currentThread());
+        return h != t && /* 同步队列至少有两个节点 */
+            ((s = h.next) == null || s.thread != Thread.currentThread());/* 头结点后面是空 或 头结点后的节点不是当前线程 */
     }
 
 

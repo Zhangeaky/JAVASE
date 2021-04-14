@@ -129,13 +129,13 @@ public class ReentrantLock implements Lock, java.io.Serializable {
         final boolean nonfairTryAcquire(int acquires) {
             final Thread current = Thread.currentThread();
             int c = getState();
-            if (c == 0) {
+            if (c == 0) { /* 如果没有占用 直接抢占 */
                 if (compareAndSetState(0, acquires)) {
-                    setExclusiveOwnerThread(current);
+                    setExclusiveOwnerThread(current); /* 将当前线程设置为 独占状态 */
                     return true;
                 }
             }
-            else if (current == getExclusiveOwnerThread()) {
+            else if (current == getExclusiveOwnerThread()) { /* 锁 重入 */
                 int nextc = c + acquires;
                 if (nextc < 0) // overflow
                     throw new Error("Maximum lock count exceeded");
@@ -228,19 +228,19 @@ public class ReentrantLock implements Lock, java.io.Serializable {
          * Fair version of tryAcquire.  Don't grant access unless
          * recursive call or no waiters or is first.
          */
-        protected final boolean tryAcquire(int acquires) {
+        protected final boolean tryAcquire(int acquires) { /* fair */
             final Thread current = Thread.currentThread();
             int c = getState();
-            if (c == 0) {
-                if (!hasQueuedPredecessors()/* 同步队列中有没有前驱节点 */ &&
+            if (c == 0) {/* 先查询 */
+                if (!hasQueuedPredecessors()&& /* 来自AQS 前面没有节点 返回 false 设置锁 */
                     compareAndSetState(0, acquires)) {
                     setExclusiveOwnerThread(current);/* 当前线程占有锁*/
                     return true;
                 }
             }
-            else if (current == getExclusiveOwnerThread()) {/* 线程锁重入 */
+            else if (current == getExclusiveOwnerThread()) {/* 二 线程锁重入 */
                 int nextc = c + acquires;
-                if (nextc < 0)
+                if (nextc < 0) /* 整型溢出情况 */
                     throw new Error("Maximum lock count exceeded");
                 setState(nextc);
                 return true;

@@ -13,10 +13,16 @@ public class demo1 {
     public static void main(String[] args) throws InterruptedException {
 
         /*
-        * 默认非公平锁
+        * 可控制公平性 默认非公平锁
         * 构造函数传入参数 true:公平 false: 不公平
         * */
 
+        /*
+        *  Sync
+        *
+        * */
+
+        /*  公平模式抢占锁的过程  */
         ReentrantLock lock = new ReentrantLock(true);
 
         new Thread(()->{
