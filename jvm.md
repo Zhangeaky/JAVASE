@@ -37,8 +37,6 @@ JDK：jre + development kit
 class
 ```
 
-
-
 #### linking
 
 验证
@@ -50,8 +48,6 @@ class
 解析
 
 符号引用转化为内存地址
-
-
 
 初始化
 
@@ -66,11 +62,7 @@ class 文件加载到内存之后
 		1. class 内存映射
   		2. 生成class 类对象，通过该对象访问class文件 指向上面的内存
 
-
-
 ![image-20210318113009199](/home/zhangeaky/.config/Typora/typora-user-images/image-20210318113009199.png)
-
-
 
 什么时候需要自己去加载一个类？
 
@@ -82,11 +74,9 @@ class 文件加载到内存之后
 
 JIT
 
-混合模式：热点代码编译成本地代码 结合  解释器
+混合模式：热点代码编译成本地代码 结合 解释器
 
 为什么不直接编译为本地代码？解释器效率高
-
-
 
 ### initial
 

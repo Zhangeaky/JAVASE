@@ -12,24 +12,17 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
  */
 
 
-
 @Configuration
 public class MyTemplate {
 
     @Bean
-    public StringRedisTemplate ooxx(RedisConnectionFactory fc){
+    public StringRedisTemplate ooxx(RedisConnectionFactory fc) {
 
         StringRedisTemplate tp = new StringRedisTemplate(fc);
 
         tp.setHashValueSerializer(new Jackson2JsonRedisSerializer<Object>(Object.class));
-        return  tp ;
+        return tp;
     }
-
-
-
-
-
-
 
 
 }

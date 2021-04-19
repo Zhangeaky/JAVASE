@@ -2,11 +2,12 @@ package top.zhangeaky.juc;
 
 import java.io.IOException;
 
-public class luanxv{
+public class luanxv {
     private int num = 8;
-    luanxv(){
-        new	Thread(()->{
-            System.out.println( num );
+
+    luanxv() {
+        new Thread(() -> {
+            System.out.println(num);
         }).start();
     }
 
@@ -18,15 +19,15 @@ public class luanxv{
 
 }
 
-class NoVisibility{
+class NoVisibility {
 
     private static boolean ready;
     private static int number;
 
-    private static class ReaderThread extends Thread{
-        public void run(){
+    private static class ReaderThread extends Thread {
+        public void run() {
             System.out.println("线程启动");
-            while (!ready){
+            while (!ready) {
                 Thread.yield();
             }
             System.out.println(number);
@@ -35,7 +36,7 @@ class NoVisibility{
 
     public static void main(String[] args) {
         new ReaderThread().start();
-        number =42;
+        number = 42;
         ready = true;
     }
 

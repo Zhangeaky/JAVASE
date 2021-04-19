@@ -11,7 +11,7 @@ public class future implements Callable<String> {
     public String call() throws Exception {
 
         Thread thread = Thread.currentThread();
-        System.out.println(thread.getName()+"is "+thread.getState());
+        System.out.println(thread.getName() + "is " + thread.getState());
         return "张毅凯";
     }
 

@@ -28,7 +28,7 @@ class RedisdemoApplicationTests {
     }
 
     @Test
-    void resource(){
+    void resource() {
         ctx.getBean(team.class);
 
     }

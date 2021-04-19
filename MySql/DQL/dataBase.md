@@ -28,7 +28,7 @@ ObjectOutputStream --->Java对象--->序列化到文件中
 mysql -uroot -p******
 ```
 
->  一些概念的理解
+> 一些概念的理解
 
 - **DB**: DataBase实际上在硬盘上以文件的形式存在
 - **DBMS**: DataBase Management System(数据库管理系统,用来管理数据库)
@@ -48,11 +48,11 @@ table是数据库的基本组成单元,所有的数据都以表格的形式组�
 
 列: 字段
 
-​	学号(int)  姓名(varchar, 可变字符串)  年龄(int)
+​ 学号(int)  姓名(varchar, 可变字符串)  年龄(int)
 
-​	1
+​ 1
 
-​    2
+​ 2
 
 每一个字段因该包含有:字段名 数据类型 相关约束(如:不能为空)
 
@@ -79,7 +79,6 @@ table是数据库的基本组成单元,所有的数据都以表格的形式组�
    #分号不能漏掉
    ```
 
-   
 
 3. 创建属于我们自己的数据库
 
@@ -218,8 +217,8 @@ SELECT ENAME,SAL FROM EMP ORDER BY SAL,ENAME DESC;
 > 3. **分组函数自动忽略null**
 >
 > 4. 不可直接出现在where子句中,因为group by 是在where 之后执行的,而且分组函数是在group by执行后执行jishu
->
->    where 执行的时候还没有分组,没有权利执行分组函数,分组函数只能在分完组之后才能使用
+     >
+     >    where 执行的时候还没有分组,没有权利执行分组函数,分组函数只能在分完组之后才能使用
 >
 > 5. 分组函数一般都会和 group by 联合使用(这也是为什么叫分组函数)
 >
@@ -316,7 +315,7 @@ select deptno avg(sal) from emp group by deptno having avg(sal)>2000;
   	..
   ```
 
-  - 查询结果去重
+    - 查询结果去重
 
   ```mysql
   SELECT distinct deptno job from EMP； # job 和deptno 联合去重

@@ -151,7 +151,7 @@ String str1 = "abc"+"xyz"；
 String str_ = new String("abc");
 ```
 
-​	equals（）方法。String类中的equals()方法对Object中的equals()进行了重写，比较对象中值是否相等，其过程是一一比较字符数组的每一个字符是否相等。
+​ equals（）方法。String类中的equals()方法对Object中的equals()进行了重写，比较对象中值是否相等，其过程是一一比较字符数组的每一个字符是否相等。
 
 ```java
 
@@ -167,8 +167,6 @@ intern()
 ```
 
 ```
-
-
 
 返回
 
@@ -280,7 +278,7 @@ finalize()
 /* 垃圾回收，若对象存在应用就不会进行垃圾回收。*/
 ```
 
-- 函数式编程 jdk1.8 lambada 
+- 函数式编程 jdk1.8 lambada
 
 函数式接口：只有一个抽象方法的接口叫做函数式接口。
 
@@ -290,8 +288,6 @@ public interface FunctionStyle {
     void f1();/*有且仅有一个抽象方法*/
 }
 ```
-
-
 
 - 方法引用
 
@@ -325,8 +321,6 @@ class Too {
 }
 ```
 
-
-
 构造方法引用
 
 - Stream API
@@ -352,8 +346,6 @@ class Too {
     
 }
 ```
-
-
 
 - 反射
 

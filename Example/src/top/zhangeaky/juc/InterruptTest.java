@@ -3,7 +3,7 @@ package top.zhangeaky.juc;
 import java.sql.Time;
 import java.util.concurrent.TimeUnit;
 
-public class InterruptTest extends Thread{
+public class InterruptTest extends Thread {
 
     public static void main(String[] args) throws InterruptedException {
 //
@@ -28,10 +28,10 @@ public class InterruptTest extends Thread{
         Thread cur = Thread.currentThread();
         cur.interrupt();
 
-        try{
+        try {
             TimeUnit.SECONDS.sleep(2);
 
-        }catch (InterruptedException e){
+        } catch (InterruptedException e) {
             System.out.println("主线程被中断");
 
         }

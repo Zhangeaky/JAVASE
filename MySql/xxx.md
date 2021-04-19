@@ -88,8 +88,6 @@
   alter table {table_name} modify ({column_name} varchar(10));
   ```
 
-  
-
 ### 表的复制
 
 - ### 语法格式
@@ -283,12 +281,6 @@ create table t_student(
 alter table {table_name } add constraint 
 ```
 
-
-
-
-
-
-
 ### 删除一张表
 
 ```mysql
@@ -304,21 +296,12 @@ drop table cascade constraint;
 rename A to B;
 ```
 
-
-
-
-
-
 ### 视图
 
 ```mysql
 # 删除视图
 drop view;
 ```
-
-
-
-
 
 若一个视图基于多个基表，则一次修改就只能修改或者删除一个基本表中的视图，一般都是不从视图删除数据的。
 

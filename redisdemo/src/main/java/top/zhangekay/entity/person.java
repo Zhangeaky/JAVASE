@@ -9,14 +9,14 @@ import java.util.List;
 import java.util.Map;
 
 /*
-* 默认是从全局配置文件中获取值
-* 将配置文件中的每一个属性 映射到这个组件中
-* 将配置文件中的属性和这个类的属性进行相关的绑定
-*
-* prefix 对应 yaml
-*
-*
-* */
+ * 默认是从全局配置文件中获取值
+ * 将配置文件中的每一个属性 映射到这个组件中
+ * 将配置文件中的属性和这个类的属性进行相关的绑定
+ *
+ * prefix 对应 yaml
+ *
+ *
+ * */
 @ConfigurationProperties(prefix = "person")
 /* 只有是spring 会扫描到的组件类 才有资格使用 configurationProperties 注解*/
 @Component

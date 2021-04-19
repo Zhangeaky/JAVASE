@@ -31,7 +31,7 @@ person:
   name: zhangeaky
   age: 25
   birth: 1996/06/08
-  maps: {country: china, province: zhejiang, city: hangzhou  }
+  maps: { country: china, province: zhejiang, city: hangzhou }
   dog:
     age: 18
     name: huang

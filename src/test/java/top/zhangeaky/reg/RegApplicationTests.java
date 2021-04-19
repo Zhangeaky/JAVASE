@@ -1,10 +1,10 @@
-package top.zhangeaky.demo;
+package top.zhangeaky.reg;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DemoApplicationTests {
+class RegApplicationTests {
 
     @Test
     void contextLoads() {

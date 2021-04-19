@@ -1,6 +1,6 @@
 team:
   name: nets
   players:
-    - {name: harden, age: 32}
-    - {name: durant, age: 33}
-    - {name: irving, age: 29}
+    - { name: harden, age: 32 }
+    - { name: durant, age: 33 }
+    - { name: irving, age: 29 }
