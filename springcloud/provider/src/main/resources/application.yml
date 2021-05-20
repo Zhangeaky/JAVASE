@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: service1
+
+  # 只要向一台eureka服务器推送信息 其他的eureka服务器就会同步得到信息
+  #eureka.client.service-url.default=http://eureka1:8761/eureka
+server:
+  port: 8082
+  #eureka.instance.hostname=provider1
+
+  # actuator 相关属性的配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: true
+
+
+
+
+
+#spring.security.user.name=yiming
+#spring.security.user.password=123
+---
+spring:
+  config:
+    activate:
+      on-profile: provider1
+
+server:
+  port: 4444
+---
+spring:
+  config:
+    activate:
+      on-profile: provider2
+server:
+  port: 5555

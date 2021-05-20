@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: registration
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false # 是否从eureka获取注册信息
+    service-url: #指定eureka集群的地址
+      defaultZone: http://eureka1:8761/eureka
+    registry-fetch-interval-seconds: 30 # 30秒抓一次
+
+  # Eureka 生产优化点
+# 1) 自我保护机制: 防止所有的服务实例都被踢出去
+#    以0.85为例子,如果eureka统计到15分钟之内 损失了>15%的心跳 就会触发自我保护机制
+#    不再剔除服务提供者
+  server:
+    enable-self-preservation: true
+    renewal-percent-threshold: 0.85
+# 踢除服务的时间间隔 设置太长 会使得 客户端拿到不可用的服务地址
+    eviction-interval-timer-in-ms: 1000
+# 2) 禁用 readOnlyCacheMap缓存注册表
+    use-read-only-response-cache: false
+# 3) 缓存 readWriteCacheMap <--> readOnlyCacheMap 同步时间间隔
+    response-cache-update-interval-ms: 30000
+# 获得不到集群里面对等的服务器上的实例时 需要等待的时间
+    wait-time-in-ms-when-sync-empty: 0
+
+
+  instance:
+    hostname: eureka1  # 主机名 若没有配置就使用操作系统发现的主机名
+    lease-renewal-interval-in-seconds: 30 #客户端向服务端发送心跳的时间 秒
+    lease-expiration-duration-in-seconds: 90 # 90秒没有收到心跳就会把服务从清单上踢掉
+    appname: registration # 默认为spring name 没有则为 unknow
+    instance-id: eureka # 不配的化就使用 主机名 推荐使用 ip+port+spring application name
+
+# eureka 这个名字的意义是什么
+server:
+  port: 8761
